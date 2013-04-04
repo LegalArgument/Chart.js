@@ -163,6 +163,8 @@ var Chart = function(context){
 
 	this.PolarArea = function(data,options){
 	
+		chart.thisdata = data;
+		
 		chart.PolarArea.defaults = {
 			scaleOverlay : true,
 			scaleOverride : false,
@@ -246,6 +248,8 @@ var Chart = function(context){
 	};
 	
 	this.Pie = function(data,options){
+		chart.thisdata = data;
+		
 		chart.Pie.defaults = {
 			segmentShowStroke : true,
 			segmentStrokeColor : "#fff",
@@ -264,6 +268,7 @@ var Chart = function(context){
 	};
 	
 	this.Doughnut = function(data,options){
+		chart.thisdata = data;
 	
 		chart.Doughnut.defaults = {
 			segmentShowStroke : true,
@@ -285,6 +290,7 @@ var Chart = function(context){
 	};
 
 	this.Line = function(data,options){
+		chart.thisdata = data;
 	
 		chart.Line.defaults = {
 			scaleOverlay : false,
@@ -321,6 +327,8 @@ var Chart = function(context){
 	}
 	
 	this.Bar = function(data,options){
+		chart.thisdata = data;
+		
 		chart.Bar.defaults = {
 			scaleOverlay : false,
 			scaleOverride : false,

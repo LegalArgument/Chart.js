@@ -10,8 +10,10 @@
 		</style>
 	</head>
 	<body>
-		<canvas id="canvas" height="450" width="450"></canvas>
-
+		<div id="graphcontainer">
+			<canvas id="canvas" height="450" width="450"></canvas>
+			<div id="legend"></div>
+		</div>
 
 	<script>
 
@@ -37,7 +39,7 @@
 		}
 
 	var myRadar = new Chart(document.getElementById("canvas").getContext("2d")).Radar(radarChartData,{scaleShowLabels : false, pointLabelFontSize : 10});
-	
+	var myLabelContainer = myRadar.createLabelContainer();
 	</script>
 	</body>
 </html>

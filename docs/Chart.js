@@ -12,7 +12,7 @@ var Chart = function(context){
 
 	var chart = this;
 	
-	
+	var thisdata;
 	//Easing functions adapted from Robert Penner's easing equations
 	//http://www.robertpenner.com/easing/
 	
@@ -199,6 +199,8 @@ var Chart = function(context){
 	};
 
 	this.Radar = function(data,options){
+		
+		chart.thisdata = data;
 	
 		chart.Radar.defaults = {
 			scaleOverlay : false,
@@ -1282,7 +1284,80 @@ var Chart = function(context){
 	}
 
 	//Declare global functions to be called within this namespace here.
+	this.createLabelContainer = (function createLabelContainer()
+	{
+		
+		var labels = new Array();
+   		
+        for (var i=0; i<this.thisdata.datasets.length; i++){ 
+        	
+            layerdata = this.thisdata.datasets[i];
+             
+            if(layerdata.hasOwnProperty('labelName')){
+            	
+            	var labelItem = new Object();
+	            labelItem.color = layerdata.fillColor;
+	            labelItem.name = layerdata.labelName;
+	            
+	            labels.push(labelItem);
+            }
+        }
+        
+        if(!(labels.length === 0)){
+        	generateLabelContainer(labels);
+        }
+	});
 	
+	
+	function generateLabelContainer( labels ){
+	
+	
+		var container = document.getElementById("graphcontainer");	
+	
+		var canvas = document.getElementById("canvas");	
+		canvas.style.float = "left";
+		
+
+		var currentWidth = canvas.offsetWidth;
+		var newWidth =  Number((parseInt(currentWidth) / 0.7).toFixed(0));
+
+		container.style.width = newWidth;
+		var currentWidth = newWidth;
+
+		var currentHeight = canvas.offsetHeight;
+		container.style.height = currentHeight;
+		
+		var labelContainer = document.getElementById('legend');
+		labelContainer.style.float = "left";
+		labelContainer.style.width = "30%";
+		labelContainer.innerHTML = "";
+		var unsortedList = document.createElement('ul');
+		unsortedList.style.listStyleType = "none";
+		
+		for(var index in labels){
+		
+			var listItem = document.createElement('li');
+			var colorSquare = document.createElement('span');
+			
+			colorSquare.style.display = "block";
+			colorSquare.style.float = "left";
+			colorSquare.style.height = "15px";
+			colorSquare.style.width = "15px";
+			colorSquare.style.border = "1px solid grey";
+			colorSquare.style.backgroundColor = labels[index].color;
+			
+			var paragraphItem = document.createElement('p');
+			paragraphItem.style.paddingLeft = "20px";
+			paragraphItem.innerHTML = labels[index].name;
+			
+			listItem.appendChild(colorSquare);
+			listItem.appendChild(paragraphItem);
+			
+			unsortedList.appendChild(listItem);
+		}
+		
+		labelContainer.appendChild(unsortedList);
+	}
 	
 	// shim layer with setTimeout fallback
 	var requestAnimFrame = (function(){
